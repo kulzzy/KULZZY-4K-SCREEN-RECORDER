@@ -1,0 +1,20 @@
+{
+  "id": "./",
+  "name": "KULZZY 4K SCREEN RECORDER",
+  "short_name": "KULZZY REC",
+  "description": "Kulzzy screen recorder for supported browsers and devices.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#06122a",
+  "theme_color": "#06122a",
+  "icons": [
+    {
+      "src": "./icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
