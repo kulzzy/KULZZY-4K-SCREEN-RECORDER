@@ -2,1743 +2,556 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#06122a">
-<meta name="description" content="Kulzzy 4K Screen Recorder. Record your screen, microphone and webcam where supported.">
-<title>Kulzzy 4K Screen Recorder</title>
+<meta name="description" content="Kulzzy Screen Recorder — capture your screen and microphone where supported.">
+<title>KULZZY 4K SCREEN RECORDER</title>
+
+<link rel="manifest" href="./manifest.json">
+<link rel="icon" href="./icon.svg" type="image/svg+xml">
 
 <style>
 :root {
-  --bg: #06122a;
-  --panel: #0c1c38;
-  --panel2: #102441;
+  --navy: #06122a;
   --gold: #ffd700;
+  --panel: #101f3b;
   --text: #ffffff;
-  --muted: #aab8cf;
-  --border: rgba(255,255,255,.10);
-  --red: #ff4545;
-  --green: #28d98a;
+  --muted: #aebbd0;
+  --border: #293a57;
 }
-
-* {
-  box-sizing: border-box;
-}
-
-html {
-  background: var(--bg);
-  color-scheme: dark;
-  scroll-behavior: smooth;
-}
-
+* { box-sizing: border-box; }
 body {
   margin: 0;
-  min-height: 100vh;
+  background: var(--navy);
   color: var(--text);
-  background:
-    radial-gradient(ellipse at top right, #13294a 0, transparent 45%),
-    var(--bg);
-  font-family: system-ui, -apple-system, BlinkMacSystemFont,
-    "Segoe UI", sans-serif;
-  font-size: 14px;
+  font-family: Arial, sans-serif;
 }
-
-button, select, input {
-  font: inherit;
-}
-
-button {
-  cursor: pointer;
-  -webkit-tap-highlight-color: transparent;
-}
-
-button:disabled {
-  opacity: .4;
-  cursor: not-allowed;
-}
-
-button:focus-visible,
-select:focus-visible,
-input:focus-visible {
-  outline: 2px solid var(--gold);
-  outline-offset: 3px;
-}
-
 header {
-  position: sticky;
-  top: 0;
-  z-index: 10;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  padding: 15px max(16px, env(safe-area-inset-left));
-  background: rgba(6,18,42,.96);
+  padding: 20px 14px;
+  text-align: center;
   border-bottom: 1px solid var(--border);
-  backdrop-filter: blur(12px);
 }
-
 .brand {
-  display: flex;
-  align-items: center;
-  gap: 11px;
-  min-width: 0;
-}
-
-.logo {
-  width: 43px;
-  height: 43px;
-  display: grid;
-  place-items: center;
-  flex-shrink: 0;
-  border-radius: 13px;
-  background: var(--gold);
-  color: #06122a;
-  font-size: 20px;
-  font-weight: 1000;
-  box-shadow: 0 0 25px rgba(255,215,0,.12);
-}
-
-.brand-name {
+  color: var(--gold);
+  font-size: clamp(21px, 5vw, 30px);
   font-weight: 900;
-  letter-spacing: .4px;
-  font-size: 15px;
 }
-
-.brand-sub {
-  margin-top: 3px;
-  color: var(--muted);
-  font-size: 11px;
-}
-
-.status {
-  display: flex;
-  align-items: center;
-  gap: 7px;
-  padding: 8px 11px;
-  border: 1px solid var(--border);
-  border-radius: 30px;
-  font-size: 11px;
-  color: var(--muted);
-  white-space: nowrap;
-}
-
-.dot {
-  width: 8px;
-  height: 8px;
-  background: var(--green);
-  border-radius: 50%;
-}
-
+.subtitle { color: var(--muted); margin-top: 8px; }
 main {
-  width: min(1180px, 100%);
-  margin: auto;
-  padding: 25px 16px 45px;
+  width: min(100% - 24px, 850px);
+  margin: 20px auto;
 }
-
-.hero {
-  margin: 4px 0 24px;
-}
-
-.eyebrow {
-  color: var(--gold);
-  font-size: 11px;
-  font-weight: 900;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-}
-
-h1 {
-  margin: 9px 0;
-  font-size: clamp(28px, 5vw, 46px);
-  line-height: 1.1;
-  letter-spacing: -1.5px;
-}
-
-h1 span {
-  color: var(--gold);
-}
-
-.hero p {
-  max-width: 650px;
-  margin: 12px 0 0;
-  color: var(--muted);
-  line-height: 1.7;
-}
-
-.layout {
-  display: grid;
-  grid-template-columns: minmax(0, 1.55fr) minmax(275px, .85fr);
-  gap: 18px;
-  align-items: start;
-}
-
 .card {
-  background: linear-gradient(145deg, var(--panel), #09172f);
+  background: var(--panel);
   border: 1px solid var(--border);
-  border-radius: 19px;
-  overflow: hidden;
-  margin-bottom: 17px;
+  border-radius: 16px;
+  padding: 18px;
+  margin-bottom: 16px;
 }
-
-.card-head {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 10px;
-  padding: 16px 17px;
-  border-bottom: 1px solid var(--border);
-}
-
-.card-head h2 {
-  margin: 0;
-  font-size: 14px;
-  font-weight: 800;
-}
-
-.small-label {
-  color: var(--muted);
-  font-size: 11px;
-}
-
-.preview-wrap {
-  padding: 12px;
-}
-
-.preview {
-  position: relative;
-  display: grid;
-  place-items: center;
-  width: 100%;
-  aspect-ratio: 16 / 9;
-  min-height: 200px;
-  overflow: hidden;
-  border-radius: 12px;
-  background:
-    radial-gradient(circle at center, #142849, #030915 72%);
-  border: 1px solid rgba(255,255,255,.06);
-}
-
-#screenPreview {
-  display: none;
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-}
-
-.preview-empty {
-  max-width: 300px;
-  padding: 20px;
-  text-align: center;
-}
-
-.preview-icon {
-  display: grid;
-  place-items: center;
-  width: 60px;
-  height: 60px;
-  margin: 0 auto 14px;
-  border: 1px solid rgba(255,215,0,.35);
-  border-radius: 18px;
-  background: rgba(255,215,0,.08);
-  color: var(--gold);
-  font-size: 28px;
-}
-
-.preview-empty strong {
-  display: block;
-  font-size: 15px;
-}
-
-.preview-empty p {
-  color: var(--muted);
-  font-size: 12px;
-  line-height: 1.7;
-}
-
-.live-badge {
-  display: none;
-  position: absolute;
-  top: 12px;
-  left: 12px;
-  align-items: center;
-  gap: 6px;
-  padding: 6px 9px;
-  border-radius: 7px;
-  background: rgba(255,69,69,.92);
-  font-size: 10px;
-  font-weight: 900;
-}
-
-#webcamPreview {
-  display: none;
-  position: absolute;
-  right: 12px;
-  bottom: 12px;
-  width: 23%;
-  max-height: 35%;
-  aspect-ratio: 4 / 3;
-  object-fit: cover;
-  border: 2px solid var(--gold);
-  border-radius: 12px;
-  background: #000;
-  transform: scaleX(-1);
-}
-
-.timer-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 12px;
-  flex-wrap: wrap;
-  padding: 10px 16px 16px;
-}
-
-.timer {
-  font-size: 27px;
-  font-weight: 900;
-  font-variant-numeric: tabular-nums;
-  letter-spacing: 1px;
-}
-
-.timer-caption {
-  color: var(--muted);
-  font-size: 10px;
-  margin-top: 3px;
-}
-
-.source-info {
-  color: var(--muted);
-  font-size: 11px;
-  text-align: right;
-  line-height: 1.7;
-  overflow-wrap: anywhere;
-}
-
-.controls {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 9px;
-  padding: 0 12px 14px;
-}
-
-.btn {
-  min-height: 44px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  padding: 11px 14px;
-  border: 1px solid var(--border);
-  border-radius: 11px;
-  background: var(--panel2);
-  color: white;
-  font-weight: 750;
-  transition: filter .15s, transform .15s;
-}
-
-.btn:active {
-  transform: scale(.98);
-}
-
-.btn:hover:not(:disabled) {
-  filter: brightness(1.15);
-}
-
-.btn-primary {
-  flex: 1 1 180px;
-  color: #071329;
-  background: var(--gold);
-  border-color: var(--gold);
-  font-weight: 950;
-}
-
-.btn-danger {
-  background: rgba(255,69,69,.12);
-  border-color: rgba(255,69,69,.4);
-  color: #ff7777;
-}
-
-.btn-download {
-  background: rgba(40,217,138,.10);
-  border-color: rgba(40,217,138,.35);
-  color: var(--green);
-}
-
-.btn-full {
-  width: 100%;
-}
-
-.settings-body {
-  padding: 16px;
-}
-
-.field {
-  margin-bottom: 17px;
-}
-
-.field:last-child {
-  margin-bottom: 0;
-}
-
-.field label,
-.field-title {
-  display: block;
-  margin-bottom: 8px;
-  color: #e5ebf7;
-  font-size: 12px;
-  font-weight: 800;
-}
-
-.field select,
-.field input[type="text"] {
-  width: 100%;
-  min-height: 44px;
-  padding: 10px 12px;
-  border: 1px solid var(--border);
+h2 { font-size: 19px; margin-top: 0; }
+button, select, input { font: inherit; }
+button {
+  border: 0;
   border-radius: 10px;
-  color: white;
-  background: #08162d;
-}
-
-.help {
-  margin-top: 6px;
-  color: var(--muted);
-  font-size: 11px;
-  line-height: 1.6;
-}
-
-.check-row {
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
-  padding: 12px 0;
-  border-bottom: 1px solid var(--border);
-}
-
-.check-row:last-child {
-  border-bottom: 0;
-  padding-bottom: 0;
-}
-
-.check-row input {
-  width: 17px;
-  height: 17px;
-  flex-shrink: 0;
-  margin: 2px 0 0;
-  accent-color: var(--gold);
-}
-
-.check-row label {
+  padding: 13px 15px;
+  font-weight: bold;
   cursor: pointer;
-  line-height: 1.5;
 }
-
-.check-row strong {
-  display: block;
-  font-size: 12px;
+button:disabled { opacity: .45; cursor: not-allowed; }
+.gold {
+  background: var(--gold);
+  color: var(--navy);
 }
-
-.check-row span {
-  display: block;
-  color: var(--muted);
-  font-size: 11px;
-  margin-top: 3px;
+.dark-button {
+  background: #263955;
+  color: white;
+  border: 1px solid #415574;
 }
-
-.notice {
-  padding: 13px;
-  border: 1px solid rgba(255,215,0,.22);
-  background: rgba(255,215,0,.055);
-  border-radius: 11px;
-  color: #e8e0b4;
-  font-size: 11px;
-  line-height: 1.7;
+button, select, input { min-height: 44px; }
+.actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
 }
-
-.notice strong {
-  color: var(--gold);
-}
-
-.message {
-  display: none;
-  margin: 12px;
+#installButton { width: 100%; margin-bottom: 14px; }
+#status {
   padding: 12px;
   border-radius: 10px;
-  font-size: 12px;
-  line-height: 1.6;
+  background: #07152e;
+  color: var(--gold);
+  line-height: 1.5;
   overflow-wrap: anywhere;
 }
-
-.message.error {
+video {
   display: block;
-  color: #ffc0c0;
-  background: rgba(255,69,69,.10);
-  border: 1px solid rgba(255,69,69,.3);
-}
-
-.message.success {
-  display: block;
-  color: #a7ffcf;
-  background: rgba(40,217,138,.08);
-  border: 1px solid rgba(40,217,138,.25);
-}
-
-.section-title {
-  margin: 26px 0 13px;
-  font-size: 17px;
-  font-weight: 900;
-}
-
-.recording-item {
-  display: grid;
-  grid-template-columns: 42px minmax(0,1fr) auto;
-  align-items: center;
-  gap: 12px;
-  padding: 14px;
-  border-bottom: 1px solid var(--border);
-}
-
-.recording-item:last-child {
-  border-bottom: 0;
-}
-
-.file-icon {
-  width: 42px;
-  height: 42px;
-  display: grid;
-  place-items: center;
-  background: rgba(255,215,0,.09);
+  width: 100%;
+  max-height: 60vh;
+  background: #000;
   border-radius: 12px;
-  color: var(--gold);
-  font-size: 19px;
+  margin-top: 12px;
 }
-
-.file-name {
-  font-size: 12px;
-  font-weight: 800;
+label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 0;
+  color: var(--muted);
+}
+label input { width: 20px; height: 20px; }
+input[type="text"], select {
+  width: 100%;
+  color: white;
+  background: #07152e;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  padding: 10px;
+}
+.field-title { display: block; margin: 14px 0 7px; }
+.small { color: var(--muted); font-size: 13px; line-height: 1.6; }
+#recordingTime { color: var(--gold); font-weight: bold; }
+#downloadLink {
+  display: none;
+  display: inline-block;
+  margin-top: 12px;
+  color: var(--gold);
   overflow-wrap: anywhere;
 }
-
-.file-meta {
-  margin-top: 5px;
-  color: var(--muted);
-  font-size: 10px;
-  line-height: 1.6;
-}
-
-.empty-library {
-  padding: 22px 15px;
-  text-align: center;
-  color: var(--muted);
-  font-size: 12px;
-  line-height: 1.7;
-}
-
 footer {
-  padding: 22px 15px;
   text-align: center;
   color: var(--muted);
-  font-size: 11px;
-  border-top: 1px solid var(--border);
-  line-height: 1.8;
+  padding: 20px;
+  font-size: 12px;
 }
-
-footer strong {
-  color: var(--gold);
-}
-
-@media (max-width: 780px) {
-  .layout {
-    grid-template-columns: 1fr;
-  }
-
-  main {
-    padding: 22px 12px 35px;
-  }
-
-  .hero {
-    margin-bottom: 20px;
-  }
-
-  .preview {
-    min-height: 190px;
-  }
-
-  .btn {
-    flex: 1 1 auto;
-  }
-
-  .btn-primary {
-    flex-basis: 100%;
-  }
-
-  .status {
-    padding: 7px 9px;
-  }
-}
-
 @media (max-width: 380px) {
-  header {
-    padding: 12px 10px;
-  }
-
-  .brand-name {
-    font-size: 12px;
-  }
-
-  .brand-sub {
-    font-size: 10px;
-  }
-
-  .logo {
-    width: 37px;
-    height: 37px;
-  }
-
-  .status {
-    font-size: 9px;
-  }
-
-  .timer {
-    font-size: 23px;
-  }
-
-  .recording-item {
-    grid-template-columns: 35px minmax(0,1fr);
-  }
-
-  .recording-item .btn {
-    grid-column: 1 / -1;
-  }
+  .actions { grid-template-columns: 1fr; }
+  .card { padding: 13px; }
 }
 </style>
 </head>
 
 <body>
-
 <header>
-  <div class="brand">
-    <div class="logo">K</div>
-    <div>
-      <div class="brand-name">KULZZY RECORDER</div>
-      <div class="brand-sub">Professional Screen Studio</div>
-    </div>
-  </div>
-
-  <div class="status">
-    <span class="dot" id="statusDot"></span>
-    <span id="statusText">READY</span>
-  </div>
+  <div class="brand">KULZZY 4K SCREEN RECORDER</div>
+  <div class="subtitle">Screen recording • Microphone • High-quality capture</div>
 </header>
 
 <main>
-  <section class="hero">
-    <div class="eyebrow">YOUR SCREEN. YOUR STORY.</div>
-    <h1>Record in <span>Ultra HD.</span></h1>
-    <p>
-      Capture your screen, microphone and webcam in one simple studio.
-      Recordings are processed locally in your browser and saved to your device.
+  <button id="installButton" class="gold" hidden>
+    INSTALL KULZZY RECORDER
+  </button>
+
+  <section class="card">
+    <h2>Screen Preview</h2>
+    <div id="status" role="status" aria-live="polite">
+      Ready. Select Start Recording to choose a screen, window, or tab
+      if your browser supports screen capture.
+    </div>
+    <video id="preview" autoplay muted playsinline></video>
+    <p>Recording time: <span id="recordingTime">00:00:00</span></p>
+  </section>
+
+  <section class="card">
+    <h2>Recording Settings</h2>
+
+    <label>
+      <input type="checkbox" id="microphone" checked>
+      Record microphone
+    </label>
+
+    <label>
+      <input type="checkbox" id="systemAudio" checked>
+      Include screen/tab audio when available
+    </label>
+
+    <label>
+      <input type="checkbox" id="previewEnabled" checked>
+      Show live preview
+    </label>
+
+    <span class="field-title">Video quality</span>
+    <select id="quality">
+      <option value="8000000">High — 8 Mbps</option>
+      <option value="16000000" selected>Very High — 16 Mbps</option>
+      <option value="30000000">Maximum — 30 Mbps</option>
+      <option value="50000000">Maximum — 50 Mbps</option>
+    </select>
+
+    <span class="field-title">Frame rate preference</span>
+    <select id="fps">
+      <option value="24">24 FPS</option>
+      <option value="30" selected>30 FPS</option>
+      <option value="60">60 FPS</option>
+    </select>
+
+    <span class="field-title">Recording filename</span>
+    <input id="filename" type="text" value="kulzzy-screen-recording"
+           maxlength="80" autocomplete="off">
+
+    <p class="small">
+      Important: the actual resolution and frame rate depend on your device,
+      the selected screen source, and browser support. Selecting a high
+      bitrate does not turn a lower-resolution source into genuine 4K.
     </p>
   </section>
 
-  <div class="layout">
+  <section class="card">
+    <h2>Recording Controls</h2>
+    <div class="actions">
+      <button id="startButton" class="gold">▶ START RECORDING</button>
+      <button id="pauseButton" class="dark-button" disabled>Ⅱ PAUSE</button>
+      <button id="resumeButton" class="dark-button" disabled>▶ RESUME</button>
+      <button id="stopButton" class="dark-button" disabled>■ STOP & SAVE</button>
+    </div>
+    <a id="downloadLink" href="#" download>Download recording</a>
+  </section>
 
-    <section>
-      <div class="card">
-        <div class="card-head">
-          <h2>Recording Studio</h2>
-          <span class="small-label" id="modeLabel">Not recording</span>
-        </div>
-
-        <div class="preview-wrap">
-          <div class="preview" id="previewBox">
-            <video id="screenPreview" autoplay muted playsinline></video>
-
-            <div class="preview-empty" id="previewEmpty">
-              <div class="preview-icon">▣</div>
-              <strong>Your recording preview</strong>
-              <p>
-                Select your recording options, then press Start Recording.
-                Your browser will ask which screen or window to capture.
-              </p>
-            </div>
-
-            <div class="live-badge" id="liveBadge">
-              <span>●</span> RECORDING
-            </div>
-
-            <video id="webcamPreview" autoplay muted playsinline></video>
-          </div>
-        </div>
-
-        <div class="timer-row">
-          <div>
-            <div class="timer" id="timer">00:00:00</div>
-            <div class="timer-caption">RECORDING TIME</div>
-          </div>
-
-          <div class="source-info">
-            <div id="sourceResolution">Source: not selected</div>
-            <div id="fileEstimate">Ready to record</div>
-          </div>
-        </div>
-
-        <div class="controls">
-          <button class="btn btn-primary" id="startBtn">
-            <span>●</span> START RECORDING
-          </button>
-
-          <button class="btn" id="pauseBtn" disabled>
-            Ⅱ Pause
-          </button>
-
-          <button class="btn btn-danger" id="stopBtn" disabled>
-            ■ Stop
-          </button>
-        </div>
-
-        <div class="message" id="message" role="status" aria-live="polite"></div>
-      </div>
-
-      <div class="card">
-        <div class="card-head">
-          <h2>Recording Library</h2>
-          <span class="small-label" id="libraryCount">0 videos</span>
-        </div>
-
-        <div id="library">
-          <div class="empty-library">
-            Your saved recordings will appear here.<br>
-            You can download them directly to your device.
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <aside>
-      <div class="card">
-        <div class="card-head">
-          <h2>Video Settings</h2>
-        </div>
-
-        <div class="settings-body">
-
-          <div class="field">
-            <label for="quality">Output Resolution</label>
-            <select id="quality">
-              <option value="source">Match screen source</option>
-              <option value="1080">1080p Full HD</option>
-              <option value="1440">1440p Quad HD</option>
-              <option value="2160" selected>4K Ultra HD</option>
-            </select>
-            <div class="help">
-              Output resolution applies to the composed video. Choosing 4K
-              can enlarge a lower-resolution source; it cannot create missing detail.
-            </div>
-          </div>
-
-          <div class="field">
-            <label for="fps">Frame Rate</label>
-            <select id="fps">
-              <option value="24">24 FPS — Cinematic</option>
-              <option value="30" selected>30 FPS — Standard</option>
-              <option value="60">60 FPS — Smooth</option>
-            </select>
-            <div class="help">
-              Actual frame rate depends on your device and capture source.
-            </div>
-          </div>
-
-          <div class="field">
-            <label for="bitrate">Video Quality</label>
-            <select id="bitrate">
-              <option value="8">Standard — 8 Mbps</option>
-              <option value="16">High — 16 Mbps</option>
-              <option value="30" selected>Ultra — 30 Mbps</option>
-              <option value="50">Maximum — 50 Mbps</option>
-            </select>
-            <div class="help">
-              Higher bitrates may produce larger files and use more memory.
-              The browser may apply its own limits.
-            </div>
-          </div>
-
-          <div class="field">
-            <label for="filename">Recording File Name</label>
-            <input type="text" id="filename" value="kulzzy-recording" maxlength="70">
-            <div class="help">Your video will be saved as a WebM file.</div>
-          </div>
-
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-head">
-          <h2>Audio & Camera</h2>
-        </div>
-
-        <div class="settings-body">
-
-          <div class="check-row">
-            <input type="checkbox" id="micEnabled">
-            <label for="micEnabled">
-              <strong>Microphone</strong>
-              <span>Include your voice in the recording.</span>
-            </label>
-          </div>
-
-          <div class="check-row">
-            <input type="checkbox" id="systemEnabled" checked>
-            <label for="systemEnabled">
-              <strong>Screen or Tab Audio</strong>
-              <span>Capture shared audio when your browser supports it.</span>
-            </label>
-          </div>
-
-          <div class="check-row">
-            <input type="checkbox" id="cameraEnabled">
-            <label for="cameraEnabled">
-              <strong>Webcam Overlay</strong>
-              <span>Place your camera video over your screen recording.</span>
-            </label>
-          </div>
-
-          <div class="notice" style="margin-top:16px">
-            <strong>Privacy:</strong> Camera and microphone access require
-            your permission. Your recordings are not automatically uploaded
-            to a server.
-          </div>
-
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-head">
-          <h2>Before Recording</h2>
-        </div>
-
-        <div class="settings-body">
-          <div class="notice">
-            <strong>Important:</strong><br><br>
-            • Use HTTPS for browser capture.<br>
-            • Desktop browsers generally offer the broadest screen-capture support.<br>
-            • Many Android browsers cannot capture the entire device screen.<br>
-            • System audio is not available for every source or browser.<br>
-            • 4K composition and webcam overlays require significant processing power.<br>
-            • Long recordings need substantial free storage space.
-          </div>
-        </div>
-      </div>
-
-    </aside>
-  </div>
+  <section class="card">
+    <h2>Before You Record</h2>
+    <p class="small">
+      1. Use HTTPS and a browser that supports screen capture.<br>
+      2. Press Start Recording and approve the browser's screen-sharing prompt.<br>
+      3. Select the source you want to record, if the browser offers one.<br>
+      4. Allow microphone access if requested.<br>
+      5. Press Stop & Save and download the video.
+    </p>
+    <p class="small">
+      If the browser does not offer screen capture, this website cannot bypass
+      that restriction. Installing it does not grant extra Android permissions.
+    </p>
+  </section>
 </main>
 
-<footer>
-  <strong>KULZZY SCREEN RECORDER</strong><br>
-  Your recording studio. Your content. Your control.
-</footer>
+<footer>KULZZY • Built for supported browsers and devices</footer>
 
 <script>
 "use strict";
 
-(() => {
-  const $ = id => document.getElementById(id);
-
-  const screenPreview = $("screenPreview");
-  const webcamPreview = $("webcamPreview");
-  const previewEmpty = $("previewEmpty");
-  const liveBadge = $("liveBadge");
-
-  const startBtn = $("startBtn");
-  const pauseBtn = $("pauseBtn");
-  const stopBtn = $("stopBtn");
-
-  const timerEl = $("timer");
-  const statusText = $("statusText");
-  const statusDot = $("statusDot");
-  const modeLabel = $("modeLabel");
-  const sourceResolution = $("sourceResolution");
-  const fileEstimate = $("fileEstimate");
-  const message = $("message");
-  const library = $("library");
-  const libraryCount = $("libraryCount");
-
-  let screenStream = null;
-  let micStream = null;
-  let cameraStream = null;
-  let outputStream = null;
-  let recorder = null;
-  let audioContext = null;
-  let audioDestination = null;
-
-  let chunks = [];
-  let recordings = [];
-  let recordingStartedAt = 0;
-  let elapsedBeforePause = 0;
-  let timerInterval = null;
-  let recordingStarted = false;
-  let previewObjectURL = null;
-
-  let compositionCanvas = null;
-  let compositionContext = null;
-  let animationFrame = null;
-
-  let audioSources = [];
-  let outputAudioTracks = [];
-
-  let outputWidth = 1920;
-  let outputHeight = 1080;
-
-  function showMessage(text, type = "success") {
-    message.textContent = text;
-    message.className = "message " + type;
-  }
-
-  function clearMessage() {
-    message.textContent = "";
-    message.className = "message";
-  }
-
-  function setStatus(text, color) {
-    statusText.textContent = text;
-    statusDot.style.background = color;
-  }
-
-  function formatTime(seconds) {
-    seconds = Math.max(0, Math.floor(seconds));
-
-    const h = Math.floor(seconds / 3600);
-    const m = Math.floor((seconds % 3600) / 60);
-    const s = seconds % 60;
-
-    return [h, m, s]
-      .map(n => String(n).padStart(2, "0"))
-      .join(":");
-  }
-
-  function currentElapsed() {
-    if (recorder && recorder.state === "recording") {
-      return elapsedBeforePause +
-        (performance.now() - recordingStartedAt) / 1000;
-    }
-
-    return elapsedBeforePause;
-  }
-
-  function updateTimer() {
-    timerEl.textContent = formatTime(currentElapsed());
-  }
-
-  function updateTimerLoop() {
-    clearInterval(timerInterval);
-    timerInterval = setInterval(updateTimer, 250);
-  }
-
-  function stopTimerLoop() {
-    clearInterval(timerInterval);
-    timerInterval = null;
-    updateTimer();
-  }
-
-  function getSelectedOutputSize() {
-    const selected = $("quality").value;
-
-    if (selected === "source") {
-      const track = screenStream?.getVideoTracks()[0];
-      const settings = track?.getSettings() || {};
-
-      return {
-        width: Math.max(2, settings.width || 1920),
-        height: Math.max(2, settings.height || 1080)
-      };
-    }
-
-    const height = Number(selected);
-
-    // Standard landscape output. Portrait screens are handled separately.
-    const width = Math.round(height * 16 / 9);
-
-    return { width, height };
-  }
-
-  function getActualScreenSize() {
-    const track = screenStream?.getVideoTracks()[0];
-    const settings = track?.getSettings() || {};
-
-    return {
-      width: settings.width || screenPreview.videoWidth || 0,
-      height: settings.height || screenPreview.videoHeight || 0
-    };
-  }
-
-  function updateSourceInfo() {
-    const size = getActualScreenSize();
-
-    if (!size.width || !size.height) {
-      sourceResolution.textContent = "Source: not selected";
-      return;
-    }
-
-    sourceResolution.textContent =
-      "Source: " + size.width + " × " + size.height;
-
-    const output = getSelectedOutputSize();
-
-    fileEstimate.textContent =
-      "Output target: " + output.width + " × " + output.height;
-  }
-
-  function stopStream(stream) {
-    if (!stream) return;
-
-    stream.getTracks().forEach(track => {
-      try {
-        track.stop();
-      } catch (_) {}
-    });
-  }
-
-  function stopComposition() {
-    if (animationFrame !== null) {
-      cancelAnimationFrame(animationFrame);
-      animationFrame = null;
-    }
-
-    compositionCanvas = null;
-    compositionContext = null;
-  }
-
-  function cleanupMedia() {
-    stopTimerLoop();
-    stopComposition();
-
-    if (screenStream) {
-      screenStream.getTracks().forEach(track => {
-        try {
-          track.stop();
-        } catch (_) {}
-      });
-    }
-
-    stopStream(micStream);
-    stopStream(cameraStream);
-
-    screenStream = null;
-    micStream = null;
-    cameraStream = null;
-    outputStream = null;
-
-    if (audioSources.length) {
-      audioSources.forEach(source => {
-        try {
-          source.disconnect();
-        } catch (_) {}
-      });
-    }
-
-    audioSources = [];
-    outputAudioTracks = [];
-
-    if (audioContext) {
-      const context = audioContext;
-      audioContext = null;
-
-      context.close().catch(() => {});
-    }
-
-    screenPreview.srcObject = null;
-    webcamPreview.srcObject = null;
-
-    screenPreview.style.display = "none";
-    webcamPreview.style.display = "none";
-    previewEmpty.style.display = "block";
-    liveBadge.style.display = "none";
-
-    if (previewObjectURL) {
-      URL.revokeObjectURL(previewObjectURL);
-      previewObjectURL = null;
-    }
-
-    recordingStarted = false;
-    elapsedBeforePause = 0;
-    timerEl.textContent = "00:00:00";
-
-    startBtn.disabled = false;
-    pauseBtn.disabled = true;
-    stopBtn.disabled = true;
-
-    $("micEnabled").disabled = false;
-    $("systemEnabled").disabled = false;
-    $("cameraEnabled").disabled = false;
-    $("quality").disabled = false;
-    $("fps").disabled = false;
-    $("bitrate").disabled = false;
-
-    modeLabel.textContent = "Not recording";
-    setStatus("READY", "#28d98a");
-
-    updateSourceInfo();
-  }
-
-  function addAudioTrack(stream, context, destination) {
-    if (!stream) return;
-
-    const tracks = stream.getAudioTracks();
-
-    if (!tracks.length) return;
-
-    const audioOnlyStream = new MediaStream(tracks);
-    const source = context.createMediaStreamSource(audioOnlyStream);
-
-    source.connect(destination);
-    audioSources.push(source);
-  }
-
-  async function prepareAudio() {
-    const needsSystemAudio =
-      $("systemEnabled").checked &&
-      screenStream.getAudioTracks().length > 0;
-
-    const needsMic = $("micEnabled").checked;
-
-    if (!needsMic && !needsSystemAudio) {
-      outputAudioTracks = [];
-      return;
-    }
-
-    const AudioContextClass =
-      window.AudioContext || window.webkitAudioContext;
-
-    if (!AudioContextClass) {
-      throw new Error("This browser does not support audio mixing.");
-    }
-
-    audioContext = new AudioContextClass();
-
-    await audioContext.resume();
-
-    audioDestination = audioContext.createMediaStreamDestination();
-
-    if (needsSystemAudio) {
-      addAudioTrack(screenStream, audioContext, audioDestination);
-    }
-
-    if (needsMic) {
-      micStream = await navigator.mediaDevices.getUserMedia({
-        audio: {
-          echoCancellation: true,
-          noiseSuppression: true,
-          autoGainControl: true
-        },
-        video: false
-      });
-
-      addAudioTrack(micStream, audioContext, audioDestination);
-    }
-
-    outputAudioTracks = audioDestination.stream.getAudioTracks();
-  }
-
-  function drawCover(context, video, x, y, width, height) {
-    if (!video || video.readyState < 2 ||
-        !video.videoWidth || !video.videoHeight) {
-      return;
-    }
-
-    const sourceRatio = video.videoWidth / video.videoHeight;
-    const targetRatio = width / height;
-
-    let sx = 0;
-    let sy = 0;
-    let sw = video.videoWidth;
-    let sh = video.videoHeight;
-
-    if (sourceRatio > targetRatio) {
-      sw = video.videoHeight * targetRatio;
-      sx = (video.videoWidth - sw) / 2;
-    } else {
-      sh = video.videoWidth / targetRatio;
-      sy = (video.videoHeight - sh) / 2;
-    }
-
-    context.drawImage(
-      video, sx, sy, sw, sh, x, y, width, height
+const $ = id => document.getElementById(id);
+
+let displayStream = null;
+let microphoneStream = null;
+let recorder = null;
+let recordedChunks = [];
+let timerInterval = null;
+let startedAt = 0;
+let elapsedBeforePause = 0;
+let deferredInstallPrompt = null;
+
+const statusBox = $("status");
+const preview = $("preview");
+const installButton = $("installButton");
+const startButton = $("startButton");
+const pauseButton = $("pauseButton");
+const resumeButton = $("resumeButton");
+const stopButton = $("stopButton");
+const downloadLink = $("downloadLink");
+
+function setStatus(message) {
+  statusBox.textContent = message;
+}
+
+function formatTime(seconds) {
+  seconds = Math.max(0, Math.floor(seconds));
+  const h = String(Math.floor(seconds / 3600)).padStart(2, "0");
+  const m = String(Math.floor((seconds % 3600) / 60)).padStart(2, "0");
+  const s = String(seconds % 60).padStart(2, "0");
+  return `${h}:${m}:${s}`;
+}
+
+function updateTimer() {
+  const seconds = elapsedBeforePause +
+    (recorder && recorder.state === "recording"
+      ? (Date.now() - startedAt) / 1000
+      : 0);
+  $("recordingTime").textContent = formatTime(seconds);
+}
+
+function stopTimer() {
+  clearInterval(timerInterval);
+  timerInterval = null;
+}
+
+function stopTracks(stream) {
+  if (stream) stream.getTracks().forEach(track => track.stop());
+}
+
+function cleanupStreams() {
+  stopTracks(displayStream);
+  stopTracks(microphoneStream);
+  displayStream = null;
+  microphoneStream = null;
+  preview.srcObject = null;
+}
+
+async function startRecording() {
+  if (!navigator.mediaDevices ||
+      typeof navigator.mediaDevices.getDisplayMedia !== "function") {
+    setStatus(
+      "Screen capture is unavailable in this browser. Installing this website " +
+      "will not add the missing feature. Try a supported desktop browser, or " +
+      "use a native Android screen recorder on your phone."
     );
+    return;
   }
 
-  function startComposition() {
-    const size = getSelectedOutputSize();
+  if (!window.MediaRecorder) {
+    setStatus("This browser does not support MediaRecorder.");
+    return;
+  }
 
-    outputWidth = size.width;
-    outputHeight = size.height;
+  startButton.disabled = true;
+  downloadLink.style.display = "none";
+  recordedChunks = [];
+  elapsedBeforePause = 0;
+  $("recordingTime").textContent = "00:00:00";
 
-    compositionCanvas = document.createElement("canvas");
-    compositionCanvas.width = outputWidth;
-    compositionCanvas.height = outputHeight;
+  try {
+    const wantSystemAudio = $("systemAudio").checked;
 
-    compositionContext = compositionCanvas.getContext("2d", {
-      alpha: false
+    displayStream = await navigator.mediaDevices.getDisplayMedia({
+      video: {
+        frameRate: Number($("fps").value)
+      },
+      audio: wantSystemAudio
     });
 
-    if (!compositionContext) {
-      throw new Error("Unable to initialize video composition.");
+    const combinedTracks = [...displayStream.getVideoTracks()];
+    const displayAudioTracks = displayStream.getAudioTracks();
+
+    if (wantSystemAudio && displayAudioTracks.length) {
+      combinedTracks.push(...displayAudioTracks);
     }
 
-    const ctx = compositionContext;
+    if ($("microphone").checked) {
+      try {
+        microphoneStream = await navigator.mediaDevices.getUserMedia({
+          audio: {
+            echoCancellation: true,
+            noiseSuppression: true,
+            autoGainControl: true
+          }
+        });
 
-    function drawFrame() {
-      if (!compositionCanvas || !compositionContext) return;
-
-      ctx.fillStyle = "#000";
-      ctx.fillRect(0, 0, outputWidth, outputHeight);
-
-      if (screenPreview.readyState >= 2 &&
-          screenPreview.videoWidth > 0) {
-
-        drawCover(
-          ctx,
-          screenPreview,
-          0,
-          0,
-          outputWidth,
-          outputHeight
+        combinedTracks.push(...microphoneStream.getAudioTracks());
+      } catch (micError) {
+        setStatus(
+          "Screen access was granted, but microphone access failed. " +
+          "Recording will continue without the microphone."
         );
       }
-
-      if (cameraStream &&
-          webcamPreview.readyState >= 2 &&
-          webcamPreview.videoWidth > 0) {
-
-        const margin = Math.round(outputWidth * 0.025);
-        const camWidth = Math.round(outputWidth * 0.23);
-        const camHeight = Math.round(camWidth * 0.75);
-        const x = outputWidth - camWidth - margin;
-        const y = outputHeight - camHeight - margin;
-        const radius = Math.round(outputWidth * 0.012);
-
-        ctx.save();
-        ctx.beginPath();
-        ctx.moveTo(x + radius, y);
-        ctx.lineTo(x + camWidth - radius, y);
-        ctx.quadraticCurveTo(
-          x + camWidth, y,
-          x + camWidth, y + radius
-        );
-        ctx.lineTo(x + camWidth, y + camHeight - radius);
-        ctx.quadraticCurveTo(
-          x + camWidth, y + camHeight,
-          x + camWidth - radius, y + camHeight
-        );
-        ctx.lineTo(x + radius, y + camHeight);
-        ctx.quadraticCurveTo(
-          x, y + camHeight,
-          x, y + camHeight - radius
-        );
-        ctx.lineTo(x, y + radius);
-        ctx.quadraticCurveTo(x, y, x + radius, y);
-        ctx.closePath();
-        ctx.clip();
-
-        drawCover(
-          ctx,
-          webcamPreview,
-          x,
-          y,
-          camWidth,
-          camHeight
-        );
-
-        ctx.restore();
-
-        ctx.strokeStyle = "#ffd700";
-        ctx.lineWidth = Math.max(2, outputWidth * 0.002);
-        ctx.strokeRect(x, y, camWidth, camHeight);
-      }
-
-      animationFrame = requestAnimationFrame(drawFrame);
     }
 
-    drawFrame();
+    const outputStream = new MediaStream(combinedTracks);
 
-    const fps = Number($("fps").value);
-
-    return compositionCanvas.captureStream(fps);
-  }
-
-  function supportsWebM() {
-    if (!window.MediaRecorder) return null;
-
-    const types = [
+    const mimeTypes = [
       "video/webm;codecs=vp9,opus",
       "video/webm;codecs=vp8,opus",
       "video/webm"
     ];
 
-    return types.find(type =>
+    const supportedType = mimeTypes.find(type =>
       MediaRecorder.isTypeSupported(type)
-    ) || "";
-  }
+    );
 
-  function getFileName() {
-    let name = $("filename").value.trim();
-
-    name = name
-      .replace(/[<>:"/\\|?*\x00-\x1F]/g, "-")
-      .replace(/\s+/g, "-")
-      .replace(/-+/g, "-")
-      .replace(/^\.+/, "")
-      .slice(0, 70);
-
-    return name || "kulzzy-recording";
-  }
-
-  async function startRecording() {
-    clearMessage();
-
-    if (!navigator.mediaDevices ||
-        !navigator.mediaDevices.getDisplayMedia) {
-
-      showMessage(
-        "Screen capture is unavailable in this browser. " +
-        "Open this website in a supported desktop browser over HTTPS. " +
-        "Many Android browsers do not expose full screen recording.",
-        "error"
-      );
-
-      return;
-    }
-
-    if (!window.MediaRecorder) {
-      showMessage(
-        "This browser does not support MediaRecorder. " +
-        "Try a current version of a supported browser.",
-        "error"
-      );
-
-      return;
-    }
-
-    startBtn.disabled = true;
-
-    try {
-      const audioChoice = $("systemEnabled").checked;
-
-      screenStream = await navigator.mediaDevices.getDisplayMedia({
-        video: {
-          frameRate: {
-            ideal: Number($("fps").value)
-          }
-        },
-        audio: audioChoice,
-        systemAudio: audioChoice ? "include" : "exclude",
-        selfBrowserSurface: "exclude",
-        surfaceSwitching: "include"
-      });
-
-      const screenTrack = screenStream.getVideoTracks()[0];
-
-      if (!screenTrack) {
-        throw new Error("No screen video source was selected.");
-      }
-
-      screenPreview.srcObject = screenStream;
-      screenPreview.style.display = "block";
-      previewEmpty.style.display = "none";
-
-      await screenPreview.play();
-
-      screenTrack.addEventListener("ended", () => {
-        if (recorder &&
-            recorder.state !== "inactive") {
-          stopRecording();
-        }
-      });
-
-      if ($("cameraEnabled").checked) {
-        try {
-          cameraStream = await navigator.mediaDevices.getUserMedia({
-            video: {
-              facingMode: "user"
-            },
-            audio: false
-          });
-
-          webcamPreview.srcObject = cameraStream;
-          webcamPreview.style.display = "block";
-
-          await webcamPreview.play();
-        } catch (error) {
-          stopStream(cameraStream);
-          cameraStream = null;
-          webcamPreview.srcObject = null;
-          webcamPreview.style.display = "none";
-
-          showMessage(
-            "The webcam could not be opened. Recording will continue " +
-            "without the webcam. " + error.message,
-            "error"
-          );
-        }
-      }
-
-      await prepareAudio();
-
-      let videoStream;
-
-      if ($("cameraEnabled").checked && cameraStream) {
-        videoStream = startComposition();
-      } else {
-        // Preserve the original capture stream when no overlay is needed.
-        videoStream = new MediaStream(
-          screenStream.getVideoTracks()
-        );
-      }
-
-      outputStream = new MediaStream([
-        ...videoStream.getVideoTracks(),
-        ...outputAudioTracks
-      ]);
-
-      const mimeType = supportsWebM();
-
-      if (!mimeType) {
-        throw new Error(
-          "No supported WebM recording format was found in this browser."
-        );
-      }
-
-      const bitrate = Number($("bitrate").value) * 1000000;
-
-      recorder = new MediaRecorder(outputStream, {
-        mimeType,
-        videoBitsPerSecond: bitrate
-      });
-
-      chunks = [];
-
-      recorder.ondataavailable = event => {
-        if (event.data && event.data.size > 0) {
-          chunks.push(event.data);
-        }
-      };
-
-      recorder.onerror = event => {
-        showMessage(
-          "Recording error: " +
-          (event.error?.message || "An unknown recording error occurred."),
-          "error"
-        );
-      };
-
-      recorder.onstop = () => {
-        finishRecording();
-      };
-
-      recorder.start(1000);
-
-      recordingStarted = true;
-      elapsedBeforePause = 0;
-      recordingStartedAt = performance.now();
-
-      updateTimerLoop();
-
-      pauseBtn.disabled = false;
-      stopBtn.disabled = false;
-
-      $("micEnabled").disabled = true;
-      $("systemEnabled").disabled = true;
-      $("cameraEnabled").disabled = true;
-      $("quality").disabled = true;
-      $("fps").disabled = true;
-      $("bitrate").disabled = true;
-
-      liveBadge.style.display = "flex";
-      modeLabel.textContent = "Recording";
-      setStatus("RECORDING", "#ff4545");
-
-      if (cameraStream) {
-        $("sourceResolution").textContent =
-          "Camera overlay active";
-      } else {
-        updateSourceInfo();
-      }
-
-      showMessage(
-        "Recording started. Keep this tab open while recording. " +
-        "Press Stop when you are finished.",
-        "success"
-      );
-
-    } catch (error) {
-      cleanupMedia();
-
-      if (error.name === "NotAllowedError") {
-        showMessage(
-          "Screen sharing was cancelled or permission was denied. " +
-          "Press Start Recording and allow screen sharing.",
-          "error"
-        );
-      } else if (error.name === "NotFoundError") {
-        showMessage(
-          "No screen or window was selected. Please try again.",
-          "error"
-        );
-      } else {
-        showMessage(
-          "Unable to start recording: " + error.message,
-          "error"
-        );
-      }
-    }
-  }
-
-  function pauseRecording() {
-    if (!recorder || recorder.state !== "recording") return;
-
-    elapsedBeforePause +=
-      (performance.now() - recordingStartedAt) / 1000;
-
-    recorder.pause();
-
-    pauseBtn.textContent = "▶ Resume";
-    modeLabel.textContent = "Paused";
-
-    setStatus("PAUSED", "#ffd700");
-    stopTimerLoop();
-  }
-
-  function resumeRecording() {
-    if (!recorder || recorder.state !== "paused") return;
-
-    recorder.resume();
-
-    recordingStartedAt = performance.now();
-
-    pauseBtn.textContent = "Ⅱ Pause";
-    modeLabel.textContent = "Recording";
-
-    setStatus("RECORDING", "#ff4545");
-    updateTimerLoop();
-  }
-
-  function stopRecording() {
-    if (recorder && recorder.state !== "inactive") {
-      stopBtn.disabled = true;
-      pauseBtn.disabled = true;
-
-      modeLabel.textContent = "Finishing video";
-      setStatus("SAVING", "#ffd700");
-
-      try {
-        recorder.stop();
-      } catch (_) {
-        cleanupMedia();
-      }
-    }
-  }
-
-  function formatBytes(bytes) {
-    if (bytes < 1024) return bytes + " B";
-
-    const units = ["KB", "MB", "GB", "TB"];
-    let size = bytes / 1024;
-    let index = 0;
-
-    while (size >= 1024 && index < units.length - 1) {
-      size /= 1024;
-      index++;
-    }
-
-    return size.toFixed(2) + " " + units[index];
-  }
-
-  function downloadRecording(blob, filename) {
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-
-    a.href = url;
-    a.download = filename;
-
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
-
-    setTimeout(() => URL.revokeObjectURL(url), 60000);
-  }
-
-  function addRecordingToLibrary(blob, filename, duration) {
-    const url = URL.createObjectURL(blob);
-
-    const item = {
-      blob,
-      url,
-      filename,
-      duration,
-      createdAt: new Date()
+    const options = {
+      videoBitsPerSecond: Number($("quality").value)
     };
 
-    recordings.unshift(item);
+    if (supportedType) options.mimeType = supportedType;
 
-    // Keep a reasonable number of large video blobs in memory.
-    while (recordings.length > 10) {
-      const removed = recordings.pop();
-      URL.revokeObjectURL(removed.url);
-    }
+    recorder = new MediaRecorder(outputStream, options);
 
-    renderLibrary();
+    recorder.ondataavailable = event => {
+      if (event.data && event.data.size > 0) {
+        recordedChunks.push(event.data);
+      }
+    };
 
-    return item;
-  }
+    recorder.onerror = event => {
+      setStatus("Recording error: " +
+        (event.error?.message || "The browser stopped recording."));
+    };
 
-  function renderLibrary() {
-    library.replaceChildren();
+    recorder.onstop = saveRecording;
 
-    libraryCount.textContent =
-      recordings.length + (recordings.length === 1 ? " video" : " videos");
-
-    if (!recordings.length) {
-      const empty = document.createElement("div");
-      empty.className = "empty-library";
-      empty.textContent =
-        "Your saved recordings will appear here. " +
-        "Download them directly to your device.";
-
-      library.appendChild(empty);
-      return;
-    }
-
-    recordings.forEach(item => {
-      const row = document.createElement("div");
-      row.className = "recording-item";
-
-      const icon = document.createElement("div");
-      icon.className = "file-icon";
-      icon.textContent = "▶";
-
-      const details = document.createElement("div");
-
-      const name = document.createElement("div");
-      name.className = "file-name";
-      name.textContent = item.filename;
-
-      const meta = document.createElement("div");
-      meta.className = "file-meta";
-      meta.textContent =
-        formatBytes(item.blob.size) + " · " +
-        formatTime(item.duration) + " · " +
-        item.createdAt.toLocaleTimeString();
-
-      details.append(name, meta);
-
-      const download = document.createElement("button");
-      download.className = "btn btn-download";
-      download.textContent = "↓ Save";
-
-      download.addEventListener("click", () => {
-        downloadRecording(item.blob, item.filename);
-      });
-
-      row.append(icon, details, download);
-      library.appendChild(row);
-    });
-  }
-
-  function finishRecording() {
-    const duration = currentElapsed();
-
-    stopTimerLoop();
-
-    const blob = new Blob(chunks, {
-      type: recorder?.mimeType || "video/webm"
+    displayStream.getVideoTracks()[0].addEventListener("ended", () => {
+      if (recorder && recorder.state !== "inactive") {
+        recorder.stop();
+      }
     });
 
-    const filename = getFileName() + ".webm";
+    preview.srcObject = displayStream;
+    preview.style.display = $("previewEnabled").checked ? "block" : "none";
 
-    const savedItem = blob.size > 0
-      ? addRecordingToLibrary(blob, filename, duration)
-      : null;
+    recorder.start(1000);
+    startedAt = Date.now();
+    timerInterval = setInterval(updateTimer, 500);
 
-    // Save locally through the browser's download system.
-    if (savedItem) {
-      downloadRecording(savedItem.blob, savedItem.filename);
+    pauseButton.disabled = false;
+    stopButton.disabled = false;
 
-      showMessage(
-        "Recording finished. Your video is ready to save. " +
-        "File size: " + formatBytes(blob.size) +
-        ". You can download it again from Recording Library.",
-        "success"
+    setStatus(
+      "Recording is active. Keep this page open. Use Pause or Stop & Save " +
+      "when finished."
+    );
+
+  } catch (error) {
+    cleanupStreams();
+    startButton.disabled = false;
+
+    if (error.name === "NotAllowedError") {
+      setStatus(
+        "Screen capture was cancelled or permission was denied. " +
+        "Press Start Recording and approve the screen-sharing request."
+      );
+    } else if (error.name === "NotSupportedError" ||
+               error.name === "TypeError") {
+      setStatus(
+        "This browser or device does not support the requested screen capture."
       );
     } else {
-      showMessage(
-        "The recording produced no video data. Try a shorter test " +
-        "recording and check your browser permissions.",
-        "error"
-      );
+      setStatus("Could not start recording: " +
+        (error.message || error.name || "Unknown error."));
     }
+  }
+}
 
-    cleanupMedia();
+function pauseRecording() {
+  if (!recorder || recorder.state !== "recording") return;
 
-    recorder = null;
-    chunks = [];
+  elapsedBeforePause += (Date.now() - startedAt) / 1000;
+  recorder.pause();
+  pauseButton.disabled = true;
+  resumeButton.disabled = false;
+  updateTimer();
+  setStatus("Recording paused.");
+}
+
+function resumeRecording() {
+  if (!recorder || recorder.state !== "paused") return;
+
+  recorder.resume();
+  startedAt = Date.now();
+  pauseButton.disabled = false;
+  resumeButton.disabled = true;
+  setStatus("Recording resumed.");
+}
+
+function stopRecording() {
+  if (!recorder || recorder.state === "inactive") return;
+
+  if (recorder.state === "recording") {
+    elapsedBeforePause += (Date.now() - startedAt) / 1000;
   }
 
-  startBtn.addEventListener("click", startRecording);
+  stopTimer();
+  updateTimer();
+  recorder.stop();
+  pauseButton.disabled = true;
+  resumeButton.disabled = true;
+  stopButton.disabled = true;
+  setStatus("Finishing recording and preparing your video...");
+}
 
-  pauseBtn.addEventListener("click", () => {
-    if (!recorder) return;
+function saveRecording() {
+  stopTimer();
 
-    if (recorder.state === "recording") {
-      pauseRecording();
-    } else if (recorder.state === "paused") {
-      resumeRecording();
-    }
+  const type = recorder && recorder.mimeType
+    ? recorder.mimeType
+    : "video/webm";
+
+  const blob = new Blob(recordedChunks, { type });
+
+  if (!blob.size) {
+    setStatus("No video data was captured. Please try recording again.");
+    cleanupStreams();
+    startButton.disabled = false;
+    return;
+  }
+
+  const safeName = $("filename").value.trim()
+    .replace(/[\\/:*?"<>|]+/g, "-") || "kulzzy-screen-recording";
+
+  const url = URL.createObjectURL(blob);
+  downloadLink.href = url;
+  downloadLink.download = safeName + ".webm";
+  downloadLink.style.display = "inline-block";
+  downloadLink.textContent =
+    "⬇ DOWNLOAD VIDEO (" + (blob.size / (1024 * 1024)).toFixed(1) + " MB)";
+
+  cleanupStreams();
+
+  startButton.disabled = false;
+  pauseButton.disabled = true;
+  resumeButton.disabled = true;
+  stopButton.disabled = true;
+
+  setStatus(
+    "Recording saved successfully in your browser. Tap Download Video " +
+    "to save it to your device."
+  );
+}
+
+startButton.addEventListener("click", startRecording);
+pauseButton.addEventListener("click", pauseRecording);
+resumeButton.addEventListener("click", resumeRecording);
+stopButton.addEventListener("click", stopRecording);
+
+$("previewEnabled").addEventListener("change", () => {
+  preview.style.display = $("previewEnabled").checked ? "block" : "none";
+});
+
+window.addEventListener("beforeunload", event => {
+  if (recorder && recorder.state !== "inactive") {
+    event.preventDefault();
+    event.returnValue = "";
+  }
+});
+
+/* PWA installation */
+window.addEventListener("beforeinstallprompt", event => {
+  event.preventDefault();
+  deferredInstallPrompt = event;
+  installButton.hidden = false;
+});
+
+installButton.addEventListener("click", async () => {
+  if (deferredInstallPrompt) {
+    deferredInstallPrompt.prompt();
+    await deferredInstallPrompt.userChoice;
+    deferredInstallPrompt = null;
+    installButton.hidden = true;
+  } else {
+    setStatus(
+      "To install: open this HTTPS website in Chrome, tap the browser menu, " +
+      "then choose Install app or Add to Home screen if available."
+    );
+  }
+});
+
+window.addEventListener("appinstalled", () => {
+  installButton.hidden = true;
+  setStatus("Kulzzy Recorder has been installed.");
+});
+
+/* Register offline support */
+if ("serviceWorker" in navigator && location.protocol === "https:") {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("./sw.js")
+      .catch(() => {
+        console.log("Service worker registration failed.");
+      });
   });
+}
 
-  stopBtn.addEventListener("click", stopRecording);
-
-  $("quality").addEventListener("change", updateSourceInfo);
-
-  $("fps").addEventListener("change", () => {
-    clearMessage();
-
-    if (recordingStarted) {
-      showMessage(
-        "Frame rate changes apply to the next recording.",
-        "success"
-      );
-    }
-  });
-
-  $("systemEnabled").addEventListener("change", () => {
-    clearMessage();
-  });
-
-  // Warn before accidentally leaving an active recording.
-  window.addEventListener("beforeunload", event => {
-    if (recorder && recorder.state !== "inactive") {
-      event.preventDefault();
-      event.returnValue = "";
-    }
-  });
-
-  // Release the camera and microphone when the page is closed.
-  window.addEventListener("pagehide", () => {
-    if (recorder && recorder.state !== "inactive") {
-      try {
-        recorder.stop();
-      } catch (_) {}
-    }
-
-    cleanupMedia();
-
-    recordings.forEach(item => URL.revokeObjectURL(item.url));
-    recordings = [];
-  });
-
-  updateSourceInfo();
-})();
+/* Show early warning instead of waiting for the user to press Record */
+if (!navigator.mediaDevices ||
+    typeof navigator.mediaDevices.getDisplayMedia !== "function") {
+  setStatus(
+    "This browser does not currently expose screen capture to this website. " +
+    "Installation may work, but it will not add the missing recording permission."
+  );
+}
 </script>
-
 </body>
 </html>
